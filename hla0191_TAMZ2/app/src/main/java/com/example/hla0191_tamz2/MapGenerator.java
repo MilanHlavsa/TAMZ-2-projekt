@@ -1,17 +1,25 @@
 package com.example.hla0191_tamz2;
 
+import static com.example.hla0191_tamz2.Game.level;
+import static com.example.hla0191_tamz2.Fight.fight;
+import static com.example.hla0191_tamz2.Game.levelSize;
+import static com.example.hla0191_tamz2.MapImages.DOWN;
 import static com.example.hla0191_tamz2.MapImages.GOBLIN;
+import static com.example.hla0191_tamz2.Current_Activity.activity;
+import static com.example.hla0191_tamz2.MapImages.HERO;
+import static com.example.hla0191_tamz2.MapImages.LEFT;
+import static com.example.hla0191_tamz2.MapImages.RIGHT;
+import static com.example.hla0191_tamz2.MapImages.UP;
 
 public class MapGenerator {
 
     private int lastDoorPosition;
-    Fight fight = new Fight();
 
     public MapGenerator(int lastDoorPosition) {
         this.lastDoorPosition = lastDoorPosition;
     }
 
-    private int getHeroPosition(int door, int move, int[] level){
+    private int getHeroPosition(int door, int move){
         int i = 0;
         for (int x: level) {
             if(x == door) return i + move;
@@ -20,7 +28,7 @@ public class MapGenerator {
         return -1;
     }
 
-    private boolean isFight(int[] level){
+    private boolean isFight(){
         int i = 0;
         for (int x: level) {
             if(x == GOBLIN.get()) return true;
@@ -30,29 +38,29 @@ public class MapGenerator {
     }
 
 
-    public int[] getMap() {
-        int level[] = {
-                1,1,1,1,6,1,1,1,1,
-                1,0,0,0,0,0,0,0,1,
-                1,0,0,0,0,0,0,0,1,
-                1,0,0,0,3,0,0,0,1,
-                9,0,0,0,0,0,0,0,7,
-                1,0,0,0,0,0,0,0,1,
-                1,0,0,0,0,0,0,0,1,
-                1,0,0,0,0,0,0,3,1,
-                1,1,1,1,8,1,1,1,1,
+    public void getMap() {
+        level = new int[]{
+                0,0,0,0,1,0,0,0,0,
+                0,5,5,5,5,5,5,5,0,
+                0,5,5,5,5,5,5,5,0,
+                0,5,5,5,7,5,5,5,0,
+                4,5,5,5,5,5,5,5,2,
+                0,5,5,5,5,5,5,5,0,
+                0,5,5,5,5,5,5,5,0,
+                0,5,5,5,5,5,5,7,0,
+                0,0,0,0,3,0,0,0,0,
         };
 
-        if (lastDoorPosition == 6) level[getHeroPosition(8,-9, level)] = 2;
-        else if (lastDoorPosition == 7) level[getHeroPosition(9,1, level)] = 2;
-        else if (lastDoorPosition == 8) level[getHeroPosition(6,9, level)] = 2;
-        else level[getHeroPosition(7,-1, level)] = 2;
+        if (lastDoorPosition == UP.get()) level[getHeroPosition(DOWN.get(),-levelSize)] = HERO.get();
+        else if (lastDoorPosition == LEFT.get()) level[getHeroPosition(RIGHT.get(),1)] = HERO.get();
+        else if (lastDoorPosition == DOWN.get()) level[getHeroPosition(UP.get(),levelSize)] = HERO.get();
+        else if (lastDoorPosition == RIGHT.get())level[getHeroPosition(LEFT.get(),-1)] = HERO.get();
 
-        if(isFight(level)) {
-            fight.fight = true;
-            fight.setEnemyPositions(level);
+        if(isFight()) {
+            fight = true;
+            Fight f = new Fight();
+            f.setEnemyPositions();
+            activity.setBuyButtonsInvisible();
         }
-
-        return level;
     }
 }

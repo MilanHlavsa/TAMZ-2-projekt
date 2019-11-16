@@ -5,21 +5,24 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import static com.example.hla0191_tamz2.Current_Activity.game;
+import static com.example.hla0191_tamz2.MapImages.ARROW;
 import static com.example.hla0191_tamz2.MapImages.COIN;
 import static com.example.hla0191_tamz2.MapImages.DOWN;
 import static com.example.hla0191_tamz2.MapImages.EMPTY;
 import static com.example.hla0191_tamz2.MapImages.GOBLIN;
 import static com.example.hla0191_tamz2.MapImages.HERO;
 import static com.example.hla0191_tamz2.MapImages.LEFT;
-import static com.example.hla0191_tamz2.MapImages.PRINCESS;
 import static com.example.hla0191_tamz2.MapImages.RIGHT;
 import static com.example.hla0191_tamz2.MapImages.UP;
 import static com.example.hla0191_tamz2.MapImages.WALL;
+import static com.example.hla0191_tamz2.Fight.fight;
 
 public class Game extends View {
 
@@ -27,7 +30,10 @@ public class Game extends View {
     private int width;
     private int height;
 
-    Fight fight = new Fight();
+    public static int hp = 4;
+    public static int arrows = 0;
+    public static boolean fireball = false;
+    public static int coins = 0;
 
     /*int levelSize = 11;
     private int level[] = {
@@ -44,20 +50,20 @@ public class Game extends View {
             1,1,1,1,1,8,1,1,1,1,1,
     };*/
 
-    private int levelSize = 9;
-    private int level[] = {
-            1,1,1,1,6,1,1,1,1,
-            1,0,0,0,0,0,0,0,1,
-            1,0,0,0,2,0,0,0,1,
-            1,0,0,0,0,0,0,0,1,
-            9,0,0,0,0,0,0,0,7,
-            1,0,4,0,0,0,4,0,1,
-            1,0,0,0,4,0,0,0,1,
-            1,0,0,0,0,0,0,0,1,
-            1,1,1,1,8,1,1,1,1,
+    public static int levelSize = 9;
+    public static int level[] = {
+            0,0,0,0,1,0,0,0,0,
+            0,5,5,5,5,5,5,5,0,
+            0,5,5,5,6,5,5,5,0,
+            0,5,5,5,5,5,5,5,0,
+            4,5,5,5,5,5,5,5,2,
+            0,5,8,5,5,5,8,5,0,
+            0,5,5,5,8,5,5,5,0,
+            0,5,5,5,5,5,5,5,0,
+            0,0,0,0,3,0,0,0,0,
     };
 
-    MovingManager mm = new MovingManager(level);
+    MovingManager mm = new MovingManager();
 
     public Game(Context context) {
         super(context);
@@ -77,16 +83,20 @@ public class Game extends View {
     void init(Context context) {
         bmp = new Bitmap[10];
 
-        bmp[EMPTY.get()] = BitmapFactory.decodeResource(getResources(), R.drawable.empty);
         bmp[WALL.get()] = BitmapFactory.decodeResource(getResources(), R.drawable.wall);
-        bmp[HERO.get()] = BitmapFactory.decodeResource(getResources(), R.drawable.hero);
-        bmp[GOBLIN.get()] = BitmapFactory.decodeResource(getResources(), R.drawable.goblin);
-        bmp[COIN.get()] = BitmapFactory.decodeResource(getResources(), R.drawable.coin);
-        bmp[PRINCESS.get()] = BitmapFactory.decodeResource(getResources(), R.drawable.wall);
         bmp[UP.get()] = BitmapFactory.decodeResource(getResources(), R.drawable.empty_up);
         bmp[LEFT.get()] = BitmapFactory.decodeResource(getResources(), R.drawable.empty_left);
         bmp[DOWN.get()] = BitmapFactory.decodeResource(getResources(), R.drawable.empty_down);
         bmp[RIGHT.get()] = BitmapFactory.decodeResource(getResources(), R.drawable.empty_right);
+        bmp[EMPTY.get()] = BitmapFactory.decodeResource(getResources(), R.drawable.empty);
+        bmp[HERO.get()] = BitmapFactory.decodeResource(getResources(), R.drawable.hero);
+        bmp[GOBLIN.get()] = BitmapFactory.decodeResource(getResources(), R.drawable.goblin);
+        bmp[COIN.get()] = BitmapFactory.decodeResource(getResources(), R.drawable.coin);
+        bmp[ARROW.get()] = BitmapFactory.decodeResource(getResources(), R.drawable.arrow);
+
+
+        Current_Activity ca = new Current_Activity();
+        ca.setGame(this);
     }
 
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
@@ -111,33 +121,26 @@ public class Game extends View {
     {
         int x = (int)event.getX();
         int y = (int)event.getY();
-        Log.d("reeeee", x + " " + y);
+        //Log.d("reeeee", x + " " + y);
 
         if (event.getAction() == android.view.MotionEvent.ACTION_UP) {
-            if (y < 500 && y > 0 && x > 300 && x < 700) level = mm.move(level , -levelSize);
-            else if(y > 500 && y < 1100 && x > 300 && x < 700) level = mm.move(level , levelSize);
-            else if(x > 550) level = mm.move(level , +1);
-            else level = mm.move(level , -1);
+            if (y < 500 && y > 0 && x > 300 && x < 700) mm.move(-levelSize);
+            else if(y > 500 && y < 1100 && x > 300 && x < 700) mm.move(levelSize);
+            else if(x > 550) mm.move(+1);
+            else mm.move(-1);
 
-            this.invalidate();
-
-            if(fight.fight) {
-                for(int i = 0; i < fight.enemyPositions.size(); i++) {
-                    //Sleep(100);
-                    level = fight.enemyMove(mm.heroPos, level, i, levelSize);
-                    this.invalidate();
-                }
-            }
             this.invalidate();
         }
         return true;
     }
 
-    private void Sleep(int count) {
-        try {
-            Thread.sleep(count);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
+    /*public static void drawDelay(int time) {
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                game.invalidate();
+            }
+        }, time);
+    }*/
 }

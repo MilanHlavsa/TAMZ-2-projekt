@@ -8,6 +8,12 @@ import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.TextView;
 
+import static com.example.hla0191_tamz2.Current_Activity.game;
+import static com.example.hla0191_tamz2.Fight.enemyPositions;
+import static com.example.hla0191_tamz2.Game.level;
+import static com.example.hla0191_tamz2.Current_Activity.activity;
+import static com.example.hla0191_tamz2.Fight.fight;
+import static com.example.hla0191_tamz2.MapImages.ARROW;
 import static com.example.hla0191_tamz2.MapImages.COIN;
 import static com.example.hla0191_tamz2.MapImages.DOWN;
 import static com.example.hla0191_tamz2.MapImages.EMPTY;
@@ -24,48 +30,42 @@ public class MovingManager {
 
     private Current_Activity a = new Current_Activity();
 
-    public MovingManager(int[] level)
+    public MovingManager()
     {
-        setHeroPos(level);
+        setHeroPos();
     }
 
-    private void setHeroPos(int[] level) {
+    private void setHeroPos() {
         int i = 0;
         for (int x: level) {
-            if(x == HERO.get()) this.heroPos = i;
+            if(x == HERO.get()) heroPos = i;
             i++;
         }
     }
 
-    private boolean tryMove(int d, int[] level) {
-        if(level[this.heroPos+d] == WALL.get() || level[this.heroPos+d] == GOBLIN.get()) return false;
+    private boolean tryMove(int d) {
+        if(level[heroPos+d] == WALL.get() || level[heroPos+d] == GOBLIN.get()) return false;
         else return true;
     }
 
-    private int getDoor(int d, int[] level) {
-        if(level[this.heroPos+d] == UP.get()) return 6;
-        else if(level[this.heroPos+d] == LEFT.get()) return 7;
-        else if(level[this.heroPos+d] == DOWN.get()) return 8;
-        else if(level[this.heroPos+d] == RIGHT.get()) return 9;
-        else return 0;
-    }
 
-    public int[] move(int[] level, int direction) {
-        if(tryMove(direction, level)) {
-            int door = getDoor(direction, level);
-            if (door == 0) {
-                a.activity.tryPickCoin(heroPos, direction, level);
-                level[this.heroPos] = EMPTY.get();
-                this.heroPos += direction;
-                level[this.heroPos] = HERO.get();
+    public void move(int direction) {
+        if(tryMove(direction)) {
+            int door = level[heroPos+direction];
+            if (door == EMPTY.get() || door == COIN.get() || door == ARROW.get()) {
+                activity.tryPick(direction);
+                level[heroPos] = EMPTY.get();
+                heroPos += direction;
+                level[heroPos] = HERO.get();
+
+                Fight f = new Fight();
+                f.startEnemyMoves();
             }
             else {
                 MapGenerator g = new MapGenerator(door);
-                level = g.getMap();
-                setHeroPos(level);
-                return level;
+                g.getMap();
+                setHeroPos();
             }
         }
-        return level;
     }
 }
