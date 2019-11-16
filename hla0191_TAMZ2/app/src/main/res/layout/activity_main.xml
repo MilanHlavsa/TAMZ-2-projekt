@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <com.example.hla0191_tamz2.Game
+        android:id="@+id/game"
+        android:layout_width="wrap_content"
+        android:layout_height="375dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/HP" />
+
+    <ImageView
+        android:id="@+id/HP"
+        android:layout_width="160dp"
+        android:layout_height="69dp"
+        android:src="@drawable/hp3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView_coin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/only_coin"
+        app:layout_constraintBottom_toTopOf="@+id/game"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView_coin2"
+        android:layout_width="55dp"
+        android:layout_height="59dp"
+        android:src="@drawable/only_arrow"
+        app:layout_constraintBottom_toTopOf="@+id/game"
+        app:layout_constraintEnd_toStartOf="@+id/coinCount"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/arrowCount"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/coinCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/aldrich"
+        android:text="0"
+        android:textColor="@android:color/black"
+        android:textSize="48sp"
+        app:layout_constraintBottom_toTopOf="@+id/game"
+        app:layout_constraintEnd_toStartOf="@+id/imageView_coin"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/HP"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/arrowCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/aldrich"
+        android:text="0"
+        android:textColor="@android:color/black"
+        android:textSize="48sp"
+        app:layout_constraintBottom_toTopOf="@+id/game"
+        app:layout_constraintStart_toEndOf="@+id/HP"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/fireball"
+        android:layout_width="106dp"
+        android:layout_height="106dp"
+        android:layout_marginStart="2dp"
+        android:src="@drawable/fireballbutton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/game"
+        app:layout_constraintVertical_bias="0.100000024" />
+
+    <ImageView
+        android:id="@+id/sword"
+        android:layout_width="106dp"
+        android:layout_height="106dp"
+        android:src="@drawable/swordbutton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/arrow"
+        app:layout_constraintStart_toEndOf="@+id/fireball"
+        app:layout_constraintTop_toBottomOf="@+id/game"
+        app:layout_constraintVertical_bias="0.1" />
+
+    <ImageView
+        android:id="@+id/arrow"
+        android:layout_width="106dp"
+        android:layout_height="106dp"
+        android:layout_marginEnd="2dp"
+        android:src="@drawable/arrowbutton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/game"
+        app:layout_constraintVertical_bias="0.1" />
+
+    <Button
+        android:id="@+id/buy_fireball"
+        android:layout_width="106dp"
+        android:layout_height="48dp"
+        android:fontFamily="@font/aldrich"
+        android:text="BUY -3G"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/fireball"
+        app:layout_constraintEnd_toEndOf="@+id/fireball"
+        app:layout_constraintStart_toStartOf="@+id/fireball"
+        app:layout_constraintTop_toTopOf="@+id/fireball"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/buy_arrow"
+        android:layout_width="106dp"
+        android:layout_height="48dp"
+        android:fontFamily="@font/aldrich"
+        android:text="BUY -1G"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/arrow"
+        app:layout_constraintEnd_toEndOf="@+id/arrow"
+        app:layout_constraintStart_toStartOf="@+id/arrow"
+        app:layout_constraintTop_toTopOf="@+id/arrow"
+        app:layout_constraintVertical_bias="1.0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
