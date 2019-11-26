@@ -11,9 +11,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import static com.example.hla0191_tamz2.Current_Activity.game;
+import static com.example.hla0191_tamz2.Fight.canArrowAttackEnemyPos;
+import static com.example.hla0191_tamz2.Fight.canFireballAttack;
+import static com.example.hla0191_tamz2.Fight.canSwordAttackEnemyPos;
 import static com.example.hla0191_tamz2.Game.arrows;
 import static com.example.hla0191_tamz2.Game.coins;
-import static com.example.hla0191_tamz2.Game.fireball;
 import static com.example.hla0191_tamz2.Game.hp;
 import static com.example.hla0191_tamz2.MapImages.ARROW;
 import static com.example.hla0191_tamz2.MapImages.COIN;
@@ -100,9 +102,9 @@ public class MainActivity extends Activity {
     }
 
     public void buyFireball(View view) {
-        if (coins>2 && !fireball){
+        if (coins>2 && !canFireballAttack){
             coins -=3;
-            fireball = true;
+            canFireballAttack = true;
             coinCount.setText(Integer.toString(coins));
             buyFireballButton.setVisibility(View.INVISIBLE);
         }
@@ -114,12 +116,23 @@ public class MainActivity extends Activity {
     }
 
     public void setBuyButtonsVisible() {
-        if (!fireball) buyFireballButton.setVisibility(View.VISIBLE);
+        if (!canFireballAttack) buyFireballButton.setVisibility(View.VISIBLE);
         buyArrowButton.setVisibility(View.VISIBLE);
     }
 
     public void ShootArrow(){
         arrows--;
         arrowCount.setText(Integer.toString(arrows));
+    }
+
+    public void setAttackButtonsImages() {
+        if (canSwordAttackEnemyPos > -1) swordAttack.setImageResource(R.drawable.swordbutton);
+        else swordAttack.setImageResource(R.drawable.swordbutton_dis);
+
+        if (canArrowAttackEnemyPos > -1 && arrows > 0) arrowAttack.setImageResource(R.drawable.arrowbutton);
+        else arrowAttack.setImageResource(R.drawable.arrowbutton_dis);
+
+        if (canFireballAttack) fireballAttack.setImageResource(R.drawable.fireballbutton);
+        else fireballAttack.setImageResource(R.drawable.fireballbutton_dis);
     }
 }

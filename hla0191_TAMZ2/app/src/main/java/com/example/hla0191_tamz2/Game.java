@@ -32,7 +32,6 @@ public class Game extends View {
 
     public static int hp = 4;
     public static int arrows = 0;
-    public static boolean fireball = false;
     public static int coins = 0;
 
     /*int levelSize = 11;

@@ -27,6 +27,7 @@ import static com.example.hla0191_tamz2.MapImages.WALL;
 public class MovingManager {
 
     public static int heroPos;
+    private Fight f = new Fight();
 
     private Current_Activity a = new Current_Activity();
 
@@ -57,14 +58,14 @@ public class MovingManager {
                 level[heroPos] = EMPTY.get();
                 heroPos += direction;
                 level[heroPos] = HERO.get();
-
-                Fight f = new Fight();
                 f.startEnemyMoves();
             }
             else {
                 MapGenerator g = new MapGenerator(door);
                 g.getMap();
                 setHeroPos();
+                f.checkAttacks();
+                activity.setAttackButtonsImages();
             }
         }
     }

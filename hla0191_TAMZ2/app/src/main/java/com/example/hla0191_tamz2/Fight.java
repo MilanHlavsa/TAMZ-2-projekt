@@ -9,7 +9,6 @@ import java.util.Random;
 
 import static com.example.hla0191_tamz2.Current_Activity.game;
 import static com.example.hla0191_tamz2.Game.arrows;
-import static com.example.hla0191_tamz2.Game.fireball;
 import static com.example.hla0191_tamz2.Game.hp;
 import static com.example.hla0191_tamz2.Game.level;
 import static com.example.hla0191_tamz2.Game.levelSize;
@@ -26,10 +25,14 @@ public class Fight {
     public static ArrayList<Integer> enemyPositions = new ArrayList<>();
     public static ArrayList<Integer> enemyHP = new ArrayList<>();
     public static int dropCount;
+    public static int canSwordAttackEnemyPos = -1;
+    public static int canArrowAttackEnemyPos = -1;
+    public static boolean canFireballAttack = false;
 
     public void setEnemyPositions() {
         dropCount = 0;
         enemyPositions.clear();
+        enemyHP.clear();
         int i = 0;
         for (int x: level) {
             if(x == GOBLIN.get()) {
@@ -64,6 +67,7 @@ public class Fight {
             for(int i = 0; i < enemyPositions.size(); i++) {
                 enemyMove(i);
             }
+            checkAttacks();
         }
     }
 
@@ -110,6 +114,7 @@ public class Fight {
                 activity.setBuyButtonsVisible();
                 Drop();
             }
+            checkAttacks();
         }
         startEnemyMoves();
 
@@ -117,18 +122,9 @@ public class Fight {
     }
 
     public void heroSwordAttack() {
-        boolean attack = false;
-        int i;
-        for(i = 0; i < enemyPositions.size(); i++) {
-            if (canAttack(enemyPositions.get(i), heroPos)) {
-                attack = true;
-                break;
-            }
-        }
-
-        if(attack) {
-            enemyHP.set(i, enemyHP.get(i)-1);
-            heroSuccessAttack(i);
+        if(canSwordAttackEnemyPos > -1) {
+            enemyHP.set(canSwordAttackEnemyPos, enemyHP.get(canSwordAttackEnemyPos)-1);
+            heroSuccessAttack(canSwordAttackEnemyPos);
         }
     }
 
@@ -151,28 +147,42 @@ public class Fight {
 
     public void heroArrowAttack() {
         if(arrows > 0) {
-            boolean attack = false;
-            int i;
-            for (i = 0; i < enemyPositions.size(); i++) {
-                if (canArrowAttack(enemyPositions.get(i), heroPos)) {
-                    attack = true;
-                    break;
-                }
-            }
-
-            if(attack) {
-                enemyHP.set(i, enemyHP.get(i)-1);
+            if(canArrowAttackEnemyPos > -1) {
+                enemyHP.set(canArrowAttackEnemyPos, enemyHP.get(canArrowAttackEnemyPos)-1);
                 activity.ShootArrow();
-                heroSuccessAttack(i);
+                heroSuccessAttack(canArrowAttackEnemyPos);
             }
         }
     }
 
     public void heroFireballAttack() {
-        if(fireball) {
+        if(canFireballAttack) {
             enemyHP.set(0, 0);
-            fireball = false;
+            canFireballAttack = false;
             heroSuccessAttack(0);
         }
+    }
+
+    public void checkAttacks() {
+
+        canArrowAttackEnemyPos = -1;
+        canSwordAttackEnemyPos = -1;
+        for(int i = 0; i < enemyPositions.size(); i++) {
+            if (canAttack(enemyPositions.get(i), heroPos)) {
+                canSwordAttackEnemyPos = i;
+                break;
+            }
+        }
+
+        if (arrows > 0) {
+            for (int i = 0; i < enemyPositions.size(); i++) {
+                if (canArrowAttack(enemyPositions.get(i), heroPos)) {
+                    canArrowAttackEnemyPos = i;
+                    break;
+                }
+            }
+        }
+
+        activity.setAttackButtonsImages();
     }
 }
