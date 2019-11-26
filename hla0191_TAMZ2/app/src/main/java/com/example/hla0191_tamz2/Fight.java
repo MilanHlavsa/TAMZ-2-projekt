@@ -92,8 +92,8 @@ public class Fight {
     private void Drop() {
         for (int i = 0; i < dropCount; i++)
         {
-            int x = (int)(Math.random()*((levelSize*levelSize-0)+1))+0;
-            while (!(level[x] == EMPTY.get())) {x = (int)(Math.random()*((levelSize*levelSize-0)+1))+0;}
+            int x = (int)(Math.random()*(((levelSize*levelSize-1)-levelSize)+1))+levelSize;
+            while (!(level[x] == EMPTY.get())) {x = (int)(Math.random()*(((levelSize*levelSize-1)-levelSize)+1))+levelSize;}
 
             if(x%3 == 0) level[x] = EMPTY.get();
             else if(x%3 == 1) level[x] = COIN.get();

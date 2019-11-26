@@ -93,7 +93,7 @@ public class MapGenerator {
     private void setRandomBlocks(int[] tabu, int count, int block) {
         int i = 0;
         while (i < count) {
-            int randomPos = (int)(Math.random()*((levelSize*levelSize-levelSize)+1))+levelSize;
+            int randomPos = (int)(Math.random()*(((levelSize*levelSize-1)-levelSize)+1))+levelSize;
             //Log.d("randomPos", randomPos+"");
             if(level[randomPos] == EMPTY.get() && !isTabuPos(tabu, randomPos)) {
                 level[randomPos] = block;
