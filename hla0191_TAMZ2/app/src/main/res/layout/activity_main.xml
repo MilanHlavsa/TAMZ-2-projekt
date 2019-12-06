@@ -129,4 +129,17 @@
         app:layout_constraintTop_toTopOf="@+id/arrow"
         app:layout_constraintVertical_bias="1.0" />
 
+    <Button
+        android:id="@+id/endGame_button"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fontFamily="@font/aldrich"
+        android:onClick="playAgain"
+        android:text="YOU WIN"
+        android:textSize="60dp"
+        app:layout_constraintBottom_toBottomOf="@+id/game"
+        app:layout_constraintEnd_toEndOf="@+id/game"
+        app:layout_constraintStart_toStartOf="@+id/game"
+        app:layout_constraintTop_toTopOf="@+id/game" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

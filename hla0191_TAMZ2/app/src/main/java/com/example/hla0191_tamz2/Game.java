@@ -19,6 +19,7 @@ import static com.example.hla0191_tamz2.MapImages.EMPTY;
 import static com.example.hla0191_tamz2.MapImages.GOBLIN;
 import static com.example.hla0191_tamz2.MapImages.HERO;
 import static com.example.hla0191_tamz2.MapImages.LEFT;
+import static com.example.hla0191_tamz2.MapImages.PRINCESS;
 import static com.example.hla0191_tamz2.MapImages.RIGHT;
 import static com.example.hla0191_tamz2.MapImages.UP;
 import static com.example.hla0191_tamz2.MapImages.WALL;
@@ -33,6 +34,7 @@ public class Game extends View {
     public static int hp = 4;
     public static int arrows = 0;
     public static int coins = 0;
+    public static int goblinsKilled = 0;
 
     /*int levelSize = 11;
     private int level[] = {
@@ -80,7 +82,7 @@ public class Game extends View {
     }
 
     void init(Context context) {
-        bmp = new Bitmap[10];
+        bmp = new Bitmap[11];
 
         bmp[WALL.get()] = BitmapFactory.decodeResource(getResources(), R.drawable.wall);
         bmp[UP.get()] = BitmapFactory.decodeResource(getResources(), R.drawable.empty_up);
@@ -92,7 +94,7 @@ public class Game extends View {
         bmp[GOBLIN.get()] = BitmapFactory.decodeResource(getResources(), R.drawable.goblin);
         bmp[COIN.get()] = BitmapFactory.decodeResource(getResources(), R.drawable.coin);
         bmp[ARROW.get()] = BitmapFactory.decodeResource(getResources(), R.drawable.arrow);
-
+        bmp[PRINCESS.get()] = BitmapFactory.decodeResource(getResources(), R.drawable.princess);
 
         Current_Activity ca = new Current_Activity();
         ca.setGame(this);

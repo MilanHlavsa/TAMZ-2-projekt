@@ -20,6 +20,7 @@ import static com.example.hla0191_tamz2.MapImages.EMPTY;
 import static com.example.hla0191_tamz2.MapImages.GOBLIN;
 import static com.example.hla0191_tamz2.MapImages.HERO;
 import static com.example.hla0191_tamz2.MapImages.LEFT;
+import static com.example.hla0191_tamz2.MapImages.PRINCESS;
 import static com.example.hla0191_tamz2.MapImages.RIGHT;
 import static com.example.hla0191_tamz2.MapImages.UP;
 import static com.example.hla0191_tamz2.MapImages.WALL;
@@ -53,7 +54,7 @@ public class MovingManager {
     public void move(int direction) {
         if(tryMove(direction)) {
             int door = level[heroPos+direction];
-            if (door == EMPTY.get() || door == COIN.get() || door == ARROW.get()) {
+            if (door == EMPTY.get() || door == COIN.get() || door == ARROW.get() || door == PRINCESS.get()) {
                 activity.tryPick(direction);
                 level[heroPos] = EMPTY.get();
                 heroPos += direction;

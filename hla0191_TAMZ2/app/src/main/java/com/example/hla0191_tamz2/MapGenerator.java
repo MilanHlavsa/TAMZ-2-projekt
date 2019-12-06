@@ -8,6 +8,7 @@ import java.math.MathContext;
 import java.util.Random;
 
 import static com.example.hla0191_tamz2.Current_Activity.game;
+import static com.example.hla0191_tamz2.Game.goblinsKilled;
 import static com.example.hla0191_tamz2.Game.level;
 import static com.example.hla0191_tamz2.Fight.fight;
 import static com.example.hla0191_tamz2.Game.levelSize;
@@ -17,6 +18,7 @@ import static com.example.hla0191_tamz2.MapImages.GOBLIN;
 import static com.example.hla0191_tamz2.Current_Activity.activity;
 import static com.example.hla0191_tamz2.MapImages.HERO;
 import static com.example.hla0191_tamz2.MapImages.LEFT;
+import static com.example.hla0191_tamz2.MapImages.PRINCESS;
 import static com.example.hla0191_tamz2.MapImages.RIGHT;
 import static com.example.hla0191_tamz2.MapImages.UP;
 import static com.example.hla0191_tamz2.MapImages.WALL;
@@ -116,6 +118,9 @@ public class MapGenerator {
 
         setRandomBlocks(tabuPositions, getRandomWallsCount(), WALL.get());
         setRandomBlocks(tabuPositions, getRandomGoblinsCount(), GOBLIN.get());
+        if(goblinsKilled >= 10) {
+            setRandomBlocks(tabuPositions, 1, PRINCESS.get());
+        }
     }
 
 

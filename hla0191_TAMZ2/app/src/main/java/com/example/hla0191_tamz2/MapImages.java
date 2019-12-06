@@ -12,7 +12,7 @@ public enum MapImages {
     bmp[8] = BitmapFactory.decodeResource(getResources(), R.drawable.empty_down);
     bmp[9] = BitmapFactory.decodeResource(getResources(), R.drawable.empty_right);*/
 
-    WALL(0), UP(1), LEFT(2), DOWN(3), RIGHT(4), EMPTY(5), HERO(6), GOBLIN(7), COIN(8), ARROW(9);
+    WALL(0), UP(1), LEFT(2), DOWN(3), RIGHT(4), EMPTY(5), HERO(6), GOBLIN(7), COIN(8), ARROW(9), PRINCESS(10);
 
     private final int value;
 

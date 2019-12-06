@@ -9,6 +9,7 @@ import java.util.Random;
 
 import static com.example.hla0191_tamz2.Current_Activity.game;
 import static com.example.hla0191_tamz2.Game.arrows;
+import static com.example.hla0191_tamz2.Game.goblinsKilled;
 import static com.example.hla0191_tamz2.Game.hp;
 import static com.example.hla0191_tamz2.Game.level;
 import static com.example.hla0191_tamz2.Game.levelSize;
@@ -38,7 +39,6 @@ public class Fight {
             if(x == GOBLIN.get()) {
                 enemyPositions.add(i);
                 enemyHP.add(2);
-
             }
             i++;
         }
@@ -106,7 +106,7 @@ public class Fight {
             level[enemyPositions.get(i)] = EMPTY.get();
             enemyPositions.remove(i);
             enemyHP.remove(i);
-
+            goblinsKilled++;
             if (enemyPositions.size() == 0) {
                 fight = false;
                 hp = 4;
