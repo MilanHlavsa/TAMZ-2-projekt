@@ -5,13 +5,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.media.MediaPlayer;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-import static com.example.hla0191_tamz2.Current_Activity.game;
+import static com.example.hla0191_tamz2.Current_Activity.activity;
 import static com.example.hla0191_tamz2.MapImages.ARROW;
 import static com.example.hla0191_tamz2.MapImages.COIN;
 import static com.example.hla0191_tamz2.MapImages.DOWN;
@@ -122,7 +123,6 @@ public class Game extends View {
     {
         int x = (int)event.getX();
         int y = (int)event.getY();
-        //Log.d("reeeee", x + " " + y);
 
         if (event.getAction() == android.view.MotionEvent.ACTION_UP) {
             if (y < 500 && y > 0 && x > 300 && x < 700) mm.move(-levelSize);

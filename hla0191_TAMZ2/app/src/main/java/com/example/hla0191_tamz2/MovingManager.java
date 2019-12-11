@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.TextView;
@@ -24,6 +25,7 @@ import static com.example.hla0191_tamz2.MapImages.PRINCESS;
 import static com.example.hla0191_tamz2.MapImages.RIGHT;
 import static com.example.hla0191_tamz2.MapImages.UP;
 import static com.example.hla0191_tamz2.MapImages.WALL;
+import static com.example.hla0191_tamz2.Sounds.moveSound;
 
 public class MovingManager {
 
@@ -53,6 +55,7 @@ public class MovingManager {
 
     public void move(int direction) {
         if(tryMove(direction)) {
+            moveSound.start();
             int door = level[heroPos+direction];
             if (door == EMPTY.get() || door == COIN.get() || door == ARROW.get() || door == PRINCESS.get()) {
                 activity.tryPick(direction);

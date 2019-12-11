@@ -1,5 +1,8 @@
 package com.example.hla0191_tamz2;
 
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.util.Log;
 import android.view.View;
 
@@ -20,6 +23,9 @@ import static com.example.hla0191_tamz2.MapImages.GOBLIN;
 import static com.example.hla0191_tamz2.MapImages.HERO;
 import static com.example.hla0191_tamz2.MovingManager.heroPos;
 import static com.example.hla0191_tamz2.Current_Activity.activity;
+import static com.example.hla0191_tamz2.Sounds.arrowSound;
+import static com.example.hla0191_tamz2.Sounds.fireballSound;
+import static com.example.hla0191_tamz2.Sounds.swordSound;
 
 public class Fight {
     public static boolean fight = false;
@@ -124,6 +130,7 @@ public class Fight {
     public void heroSwordAttack() {
         if(canSwordAttackEnemyPos > -1) {
             enemyHP.set(canSwordAttackEnemyPos, enemyHP.get(canSwordAttackEnemyPos)-1);
+            swordSound.start();
             heroSuccessAttack(canSwordAttackEnemyPos);
         }
     }
@@ -150,6 +157,7 @@ public class Fight {
             if(canArrowAttackEnemyPos > -1) {
                 enemyHP.set(canArrowAttackEnemyPos, enemyHP.get(canArrowAttackEnemyPos)-1);
                 activity.ShootArrow();
+                arrowSound.start();
                 heroSuccessAttack(canArrowAttackEnemyPos);
             }
         }
@@ -159,6 +167,7 @@ public class Fight {
         if(canFireballAttack) {
             enemyHP.set(0, 0);
             canFireballAttack = false;
+            fireballSound.start();
             heroSuccessAttack(0);
         }
     }

@@ -4,12 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.Activity;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import static com.example.hla0191_tamz2.Current_Activity.activity;
 import static com.example.hla0191_tamz2.Current_Activity.game;
 import static com.example.hla0191_tamz2.Fight.canArrowAttackEnemyPos;
 import static com.example.hla0191_tamz2.Fight.canFireballAttack;
@@ -26,6 +29,9 @@ import static com.example.hla0191_tamz2.MapImages.ARROW;
 import static com.example.hla0191_tamz2.MapImages.COIN;
 import static com.example.hla0191_tamz2.MapImages.PRINCESS;
 import static com.example.hla0191_tamz2.MovingManager.heroPos;
+import static com.example.hla0191_tamz2.Sounds.coinSound;
+import static com.example.hla0191_tamz2.Sounds.loseSound;
+import static com.example.hla0191_tamz2.Sounds.winSound;
 
 public class MainActivity extends Activity {
 
@@ -39,7 +45,6 @@ public class MainActivity extends Activity {
     private Button buyArrowButton;
     private Button buyFireballButton;
     private Button endGameButton;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,18 +84,23 @@ public class MainActivity extends Activity {
         endGameButton.setVisibility(View.INVISIBLE);
 
         Current_Activity c = new Current_Activity(this);
+
+        Sounds s = new Sounds();
     }
 
     public void tryPick(int d) {
         if(level[heroPos+d] == COIN.get()) {
+            coinSound.start();
             coins++;
             coinCount.setText(Integer.toString(coins));
         }
         else if(level[heroPos+d] == ARROW.get()) {
+            coinSound.start();
             arrows++;
             arrowCount.setText(Integer.toString(arrows));
         }
         else if(level[heroPos+d] == PRINCESS.get()) {
+            winSound.start();
             endGameButton.setText("YOU WIN,\nPLAY AGAIN?");
             endGameButton.setVisibility(View.VISIBLE);
         }
@@ -101,6 +111,7 @@ public class MainActivity extends Activity {
         if(hp <= 0) {
             endGameButton.setText("YOU LOSE,\nPLAY AGAIN?");
             endGameButton.setVisibility(View.VISIBLE);
+            loseSound.start();
         }
         else if(hp == 1) hpImage.setImageResource(R.drawable.hp0);
         else if(hp == 2) hpImage.setImageResource(R.drawable.hp1);
@@ -186,7 +197,7 @@ public class MainActivity extends Activity {
         arrowAttack.setImageResource(R.drawable.arrowbutton_dis);
         fireballAttack.setImageResource(R.drawable.fireballbutton_dis);
         buyArrowButton.setVisibility(View.VISIBLE);
-        buyArrowButton.setVisibility(View.VISIBLE);
+        buyFireballButton.setVisibility(View.VISIBLE);
 
         game.invalidate();
     }
