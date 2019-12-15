@@ -7,8 +7,12 @@ import java.io.Console;
 import java.math.MathContext;
 import java.util.Random;
 
+import static com.example.hla0191_tamz2.AnimImages.ANEMPTY;
+import static com.example.hla0191_tamz2.Animation.animLevel;
 import static com.example.hla0191_tamz2.Current_Activity.game;
+import static com.example.hla0191_tamz2.Current_Activity.anim;
 import static com.example.hla0191_tamz2.Game.goblinsKilled;
+import static com.example.hla0191_tamz2.Game.goblinsKilledGoal;
 import static com.example.hla0191_tamz2.Game.level;
 import static com.example.hla0191_tamz2.Fight.fight;
 import static com.example.hla0191_tamz2.Game.levelSize;
@@ -54,6 +58,12 @@ public class MapGenerator {
             level[size-i] = WALL.get();
             level[levelSize*(i-1)] = WALL.get();
             level[(levelSize*i)-1] = WALL.get();
+        }
+    }
+
+    private void setDefaultAnimMap(int size) {
+        for (int j = 0; j < size; j++) {
+            animLevel[j] = ANEMPTY.get();
         }
     }
 
@@ -109,7 +119,9 @@ public class MapGenerator {
         levelSize = getNewLevelSize(12,7);
         int size = levelSize*levelSize;
         level = new int[size];
+        animLevel = new int[size];
         setDefaultMap(size);
+        setDefaultAnimMap(size);
 
         int halfLevelPosition = (int)Math.floor(levelSize/2);
         int[] tabuPositions = {size-halfLevelPosition-1-levelSize, levelSize*halfLevelPosition+1, halfLevelPosition+levelSize, levelSize*(halfLevelPosition+1)-2};
@@ -118,7 +130,7 @@ public class MapGenerator {
 
         setRandomBlocks(tabuPositions, getRandomWallsCount(), WALL.get());
         setRandomBlocks(tabuPositions, getRandomGoblinsCount(), GOBLIN.get());
-        if(goblinsKilled >= 10) {
+        if(goblinsKilled >= goblinsKilledGoal) {
             setRandomBlocks(tabuPositions, 1, PRINCESS.get());
         }
     }
@@ -126,7 +138,8 @@ public class MapGenerator {
 
     public void getMap() {
         generateRandomMap();
-        game.onSizeChanged (game.getWidth(),game.getHeight(),game.getWidth(),game.getHeight());
+        game.onSizeChanged(game.getWidth(),game.getHeight(),game.getWidth(),game.getHeight());
+        anim.onSizeChanged(anim.getWidth(),anim.getHeight(),anim.getWidth(),anim.getHeight());
 
         if(isFight()) {
             fight = true;

@@ -13,6 +13,7 @@ import static com.example.hla0191_tamz2.Current_Activity.game;
 import static com.example.hla0191_tamz2.Fight.enemyPositions;
 import static com.example.hla0191_tamz2.Game.level;
 import static com.example.hla0191_tamz2.Current_Activity.activity;
+import static com.example.hla0191_tamz2.Current_Activity.anim;
 import static com.example.hla0191_tamz2.Fight.fight;
 import static com.example.hla0191_tamz2.MapImages.ARROW;
 import static com.example.hla0191_tamz2.MapImages.COIN;

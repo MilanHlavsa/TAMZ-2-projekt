@@ -14,6 +14,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/HP" />
 
+    <com.example.hla0191_tamz2.Animation
+        android:id="@+id/animation"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/game"
+        app:layout_constraintEnd_toEndOf="@+id/game"
+        app:layout_constraintStart_toStartOf="@+id/game"
+        app:layout_constraintTop_toTopOf="@+id/game" />
+
     <ImageView
         android:id="@+id/HP"
         android:layout_width="160dp"

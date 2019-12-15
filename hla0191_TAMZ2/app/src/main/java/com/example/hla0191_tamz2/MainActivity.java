@@ -4,9 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
+import android.graphics.Canvas;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -22,6 +25,7 @@ import static com.example.hla0191_tamz2.Fight.enemyPositions;
 import static com.example.hla0191_tamz2.Game.arrows;
 import static com.example.hla0191_tamz2.Game.coins;
 import static com.example.hla0191_tamz2.Game.goblinsKilled;
+import static com.example.hla0191_tamz2.Game.goblinsKilledGoal;
 import static com.example.hla0191_tamz2.Game.hp;
 import static com.example.hla0191_tamz2.Game.level;
 import static com.example.hla0191_tamz2.Game.levelSize;
@@ -34,6 +38,9 @@ import static com.example.hla0191_tamz2.Sounds.loseSound;
 import static com.example.hla0191_tamz2.Sounds.winSound;
 
 public class MainActivity extends Activity {
+
+    private String playerName;
+    private String difficulty;
 
     private TextView coinCount;
     private TextView arrowCount;
@@ -49,6 +56,13 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SharedPreferences prefs = getSharedPreferences("sharedPreferences", MODE_PRIVATE);
+        playerName = prefs.getString("name", "");
+        difficulty = prefs.getString("difficulty", "");
+
+        Bundle extras = getIntent().getExtras();
+        goblinsKilledGoal = extras.getInt("goblinCount");
 
         coinCount = findViewById(R.id.coinCount);
         hpImage = findViewById(R.id.HP);
@@ -88,6 +102,16 @@ public class MainActivity extends Activity {
         Sounds s = new Sounds();
     }
 
+    private void Win() {
+        winSound.start();
+        endGameButton.setText("YOU WIN,\nPLAY AGAIN?");
+        endGameButton.setVisibility(View.VISIBLE);
+        if(playerName != "") {
+            Database db = new Database(this);
+            boolean pom = db.insertData(playerName, difficulty, goblinsKilled);
+        }
+    }
+
     public void tryPick(int d) {
         if(level[heroPos+d] == COIN.get()) {
             coinSound.start();
@@ -100,9 +124,7 @@ public class MainActivity extends Activity {
             arrowCount.setText(Integer.toString(arrows));
         }
         else if(level[heroPos+d] == PRINCESS.get()) {
-            winSound.start();
-            endGameButton.setText("YOU WIN,\nPLAY AGAIN?");
-            endGameButton.setVisibility(View.VISIBLE);
+            Win();
         }
     }
 

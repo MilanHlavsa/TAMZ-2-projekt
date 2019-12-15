@@ -4,6 +4,7 @@ public class Current_Activity {
 
     public static MainActivity activity;
     public static Game game;
+    public static Animation anim;
 
     public Current_Activity() {}
 
@@ -14,4 +15,6 @@ public class Current_Activity {
     public void setGame(Game g) {
         game = g;
     }
+
+    public void setAnim(Animation a) { anim = a; }
 }

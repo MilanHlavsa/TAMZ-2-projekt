@@ -36,6 +36,7 @@ public class Game extends View {
     public static int arrows = 0;
     public static int coins = 0;
     public static int goblinsKilled = 0;
+    public static int goblinsKilledGoal;
 
     /*int levelSize = 11;
     private int level[] = {

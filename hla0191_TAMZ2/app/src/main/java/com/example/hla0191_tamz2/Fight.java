@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.EmptyStackException;
 import java.util.Random;
 
+import static com.example.hla0191_tamz2.Current_Activity.anim;
 import static com.example.hla0191_tamz2.Current_Activity.game;
 import static com.example.hla0191_tamz2.Game.arrows;
 import static com.example.hla0191_tamz2.Game.goblinsKilled;
@@ -165,6 +166,7 @@ public class Fight {
 
     public void heroFireballAttack() {
         if(canFireballAttack) {
+            anim.playExplosion(enemyPositions.get(0));
             enemyHP.set(0, 0);
             canFireballAttack = false;
             fireballSound.start();
