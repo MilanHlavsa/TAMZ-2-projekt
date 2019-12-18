@@ -151,4 +151,17 @@
         app:layout_constraintStart_toStartOf="@+id/game"
         app:layout_constraintTop_toTopOf="@+id/game" />
 
+    <Button
+        android:id="@+id/endGame_button2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fontFamily="@font/aldrich"
+        android:onClick="playAgain"
+        android:text="MAIN MENU"
+        android:textSize="40dp"
+        app:layout_constraintBottom_toBottomOf="@+id/sword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/fireball"
+        app:layout_constraintTop_toTopOf="@+id/sword" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

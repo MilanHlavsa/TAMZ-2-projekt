@@ -5,14 +5,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
-import android.media.MediaPlayer;
-import android.os.Handler;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-import static com.example.hla0191_tamz2.Current_Activity.activity;
 import static com.example.hla0191_tamz2.MapImages.ARROW;
 import static com.example.hla0191_tamz2.MapImages.COIN;
 import static com.example.hla0191_tamz2.MapImages.DOWN;
@@ -24,7 +20,6 @@ import static com.example.hla0191_tamz2.MapImages.PRINCESS;
 import static com.example.hla0191_tamz2.MapImages.RIGHT;
 import static com.example.hla0191_tamz2.MapImages.UP;
 import static com.example.hla0191_tamz2.MapImages.WALL;
-import static com.example.hla0191_tamz2.Fight.fight;
 
 public class Game extends View {
 
@@ -37,21 +32,6 @@ public class Game extends View {
     public static int coins = 0;
     public static int goblinsKilled = 0;
     public static int goblinsKilledGoal;
-
-    /*int levelSize = 11;
-    private int level[] = {
-            1,1,1,1,1,6,1,1,1,1,1,
-            1,0,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,2,0,0,0,0,1,
-            1,0,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,0,0,0,0,0,1,
-            9,0,0,0,0,0,0,0,0,0,7,
-            1,0,0,0,0,0,0,0,0,0,1,
-            1,0,4,0,0,0,0,0,4,0,1,
-            1,0,0,0,0,4,0,0,0,0,1,
-            1,0,0,0,0,0,0,0,0,0,1,
-            1,1,1,1,1,8,1,1,1,1,1,
-    };*/
 
     public static int levelSize = 9;
     public static int level[] = {
@@ -119,30 +99,30 @@ public class Game extends View {
         }
     }
 
+    private int xStart;
+    private int yStart;
     @Override
     public boolean onTouchEvent(MotionEvent event)
     {
-        int x = (int)event.getX();
-        int y = (int)event.getY();
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            xStart = (int)event.getX();
+            yStart = (int)event.getY();
+        }
 
         if (event.getAction() == android.view.MotionEvent.ACTION_UP) {
-            if (y < 500 && y > 0 && x > 300 && x < 700) mm.move(-levelSize);
-            else if(y > 500 && y < 1100 && x > 300 && x < 700) mm.move(levelSize);
-            else if(x > 550) mm.move(+1);
-            else mm.move(-1);
+            int x = (int)event.getX();
+            int y = (int)event.getY();
+
+            String direction = mm.getDirection(xStart, yStart, x, y);
+
+            if (direction == "up") mm.move(-levelSize);
+            else if(direction == "down") mm.move(levelSize);
+            else if(direction == "left") mm.move(+1);
+            else if(direction == "right") mm.move(-1);
+
 
             this.invalidate();
         }
         return true;
     }
-
-    /*public static void drawDelay(int time) {
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                game.invalidate();
-            }
-        }, time);
-    }*/
 }

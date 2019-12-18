@@ -1,30 +1,13 @@
 package com.example.hla0191_tamz2;
 
-import android.app.Activity;
-import android.app.ActivityManager;
-import android.content.ComponentName;
-import android.content.Context;
-import android.media.MediaPlayer;
-import android.view.View;
-import android.view.animation.AccelerateInterpolator;
-import android.widget.TextView;
-
-import static com.example.hla0191_tamz2.Current_Activity.game;
-import static com.example.hla0191_tamz2.Fight.enemyPositions;
 import static com.example.hla0191_tamz2.Game.level;
 import static com.example.hla0191_tamz2.Current_Activity.activity;
-import static com.example.hla0191_tamz2.Current_Activity.anim;
-import static com.example.hla0191_tamz2.Fight.fight;
 import static com.example.hla0191_tamz2.MapImages.ARROW;
 import static com.example.hla0191_tamz2.MapImages.COIN;
-import static com.example.hla0191_tamz2.MapImages.DOWN;
 import static com.example.hla0191_tamz2.MapImages.EMPTY;
 import static com.example.hla0191_tamz2.MapImages.GOBLIN;
 import static com.example.hla0191_tamz2.MapImages.HERO;
-import static com.example.hla0191_tamz2.MapImages.LEFT;
 import static com.example.hla0191_tamz2.MapImages.PRINCESS;
-import static com.example.hla0191_tamz2.MapImages.RIGHT;
-import static com.example.hla0191_tamz2.MapImages.UP;
 import static com.example.hla0191_tamz2.MapImages.WALL;
 import static com.example.hla0191_tamz2.Sounds.moveSound;
 
@@ -33,11 +16,25 @@ public class MovingManager {
     public static int heroPos;
     private Fight f = new Fight();
 
-    private Current_Activity a = new Current_Activity();
-
     public MovingManager()
     {
         setHeroPos();
+    }
+
+    public String getDirection(int xStart, int yStart, int xEnd, int yEnd) {
+        int xDif = xStart-xEnd;
+        int yDif = yStart-yEnd;
+
+        if(Math.abs(xDif) >= Math.abs(yDif)){
+            if (xDif > 50) return "right";
+            else if(xDif < -50) return "left";
+        }
+        else {
+            if (yDif > 50) return "up";
+            else if(yDif < -50) return "down";
+        }
+
+        return "";
     }
 
     private void setHeroPos() {

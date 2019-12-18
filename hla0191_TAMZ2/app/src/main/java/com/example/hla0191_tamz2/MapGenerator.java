@@ -1,12 +1,5 @@
 package com.example.hla0191_tamz2;
 
-import android.database.sqlite.SQLiteBindOrColumnIndexOutOfRangeException;
-import android.util.Log;
-
-import java.io.Console;
-import java.math.MathContext;
-import java.util.Random;
-
 import static com.example.hla0191_tamz2.AnimImages.ANEMPTY;
 import static com.example.hla0191_tamz2.Animation.animLevel;
 import static com.example.hla0191_tamz2.Current_Activity.game;
@@ -106,7 +99,6 @@ public class MapGenerator {
         int i = 0;
         while (i < count) {
             int randomPos = (int)(Math.random()*(((levelSize*levelSize-1)-levelSize)+1))+levelSize;
-            //Log.d("randomPos", randomPos+"");
             if(level[randomPos] == EMPTY.get() && !isTabuPos(tabu, randomPos)) {
                 level[randomPos] = block;
                 i++;
@@ -115,7 +107,6 @@ public class MapGenerator {
     }
 
     private void generateRandomMap() {
-        //double x = (Math.random()*((max-min)+1))+min;
         levelSize = getNewLevelSize(12,7);
         int size = levelSize*levelSize;
         level = new int[size];

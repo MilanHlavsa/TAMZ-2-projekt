@@ -1,15 +1,8 @@
 package com.example.hla0191_tamz2;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Canvas;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -52,6 +45,7 @@ public class MainActivity extends Activity {
     private Button buyArrowButton;
     private Button buyFireballButton;
     private Button endGameButton;
+    private Button endGameButton2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,9 +54,7 @@ public class MainActivity extends Activity {
         SharedPreferences prefs = getSharedPreferences("sharedPreferences", MODE_PRIVATE);
         playerName = prefs.getString("name", "");
         difficulty = prefs.getString("difficulty", "");
-
-        Bundle extras = getIntent().getExtras();
-        goblinsKilledGoal = extras.getInt("goblinCount");
+        goblinsKilledGoal = prefs.getInt("goblinCount", 10);
 
         coinCount = findViewById(R.id.coinCount);
         hpImage = findViewById(R.id.HP);
@@ -96,6 +88,17 @@ public class MainActivity extends Activity {
 
         endGameButton = findViewById(R.id.endGame_button);
         endGameButton.setVisibility(View.INVISIBLE);
+        endGameButton2 = findViewById(R.id.endGame_button2);
+        endGameButton2.setVisibility(View.INVISIBLE);
+        endGameButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(activity, Menu.class);
+                finish();
+                startActivity(intent);
+                playAgain(null);
+            }
+        });
 
         Current_Activity c = new Current_Activity(this);
 
@@ -106,9 +109,10 @@ public class MainActivity extends Activity {
         winSound.start();
         endGameButton.setText("YOU WIN,\nPLAY AGAIN?");
         endGameButton.setVisibility(View.VISIBLE);
+        endGameButton2.setVisibility(View.VISIBLE);
         if(playerName != "") {
             Database db = new Database(this);
-            boolean pom = db.insertData(playerName, difficulty, goblinsKilled);
+            db.insertData(playerName, difficulty, goblinsKilled);
         }
     }
 
@@ -133,6 +137,7 @@ public class MainActivity extends Activity {
         if(hp <= 0) {
             endGameButton.setText("YOU LOSE,\nPLAY AGAIN?");
             endGameButton.setVisibility(View.VISIBLE);
+            endGameButton2.setVisibility(View.VISIBLE);
             loseSound.start();
         }
         else if(hp == 1) hpImage.setImageResource(R.drawable.hp0);
@@ -213,6 +218,7 @@ public class MainActivity extends Activity {
         };
         heroPos = 22;
         endGameButton.setVisibility(View.INVISIBLE);
+        endGameButton2.setVisibility(View.INVISIBLE);
         game.onSizeChanged (game.getWidth(),game.getHeight(),game.getWidth(),game.getHeight());
 
         swordAttack.setImageResource(R.drawable.swordbutton_dis);
@@ -222,5 +228,13 @@ public class MainActivity extends Activity {
         buyFireballButton.setVisibility(View.VISIBLE);
 
         game.invalidate();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (true) {}
+        else {
+            super.onBackPressed();
+        }
     }
 }

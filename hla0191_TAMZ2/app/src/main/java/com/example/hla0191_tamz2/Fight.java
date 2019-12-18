@@ -1,14 +1,6 @@
 package com.example.hla0191_tamz2;
 
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.media.SoundPool;
-import android.util.Log;
-import android.view.View;
-
 import java.util.ArrayList;
-import java.util.EmptyStackException;
-import java.util.Random;
 
 import static com.example.hla0191_tamz2.Current_Activity.anim;
 import static com.example.hla0191_tamz2.Current_Activity.game;
@@ -21,7 +13,6 @@ import static com.example.hla0191_tamz2.MapImages.ARROW;
 import static com.example.hla0191_tamz2.MapImages.COIN;
 import static com.example.hla0191_tamz2.MapImages.EMPTY;
 import static com.example.hla0191_tamz2.MapImages.GOBLIN;
-import static com.example.hla0191_tamz2.MapImages.HERO;
 import static com.example.hla0191_tamz2.MovingManager.heroPos;
 import static com.example.hla0191_tamz2.Current_Activity.activity;
 import static com.example.hla0191_tamz2.Sounds.arrowSound;

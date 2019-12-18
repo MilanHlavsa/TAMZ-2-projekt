@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -35,15 +34,13 @@ public class Menu extends AppCompatActivity {
 
     private void startGame(int goblinCount, String difficulty) {
 
-        if (playerName.getText().length() != 0) {
-            SharedPreferences.Editor editor = getSharedPreferences("sharedPreferences", MODE_PRIVATE).edit();
-            editor.putString("name", playerName.getText().toString());
-            editor.putString("difficulty", difficulty);
-            editor.apply();
-        }
+        SharedPreferences.Editor editor = getSharedPreferences("sharedPreferences", MODE_PRIVATE).edit();
+        editor.putString("name", playerName.getText().toString());
+        editor.putInt("goblinCount", goblinCount);
+        editor.putString("difficulty", difficulty);
+        editor.apply();
 
         Intent intent = new Intent(Menu.this, MainActivity.class);
-        intent.putExtra("goblinCount", goblinCount);
         startActivity(intent);
     }
 
@@ -66,7 +63,7 @@ public class Menu extends AppCompatActivity {
         Cursor data = db.getData();
         ArrayList<String> listData = new ArrayList<>();
         while(data.moveToNext()) {
-            listData.add(data.getString(1));
+            listData.add("Player: " + data.getString(1) + "\nGoblins killed: " + data.getString(2) + "\nDifficulty: " + data.getString(3));
         }
         ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
         score.setAdapter(adapter);
@@ -81,6 +78,10 @@ public class Menu extends AppCompatActivity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                SharedPreferences prefs = getSharedPreferences("sharedPreferences", MODE_PRIVATE);
+                playerName.setText(prefs.getString("name", ""));
+
                 easyButton.setVisibility(View.VISIBLE);
                 normalButton.setVisibility(View.VISIBLE);
                 hardButton.setVisibility(View.VISIBLE);
@@ -154,5 +155,13 @@ public class Menu extends AppCompatActivity {
         initScore();
 
         goBack();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (true) {}
+        else {
+            super.onBackPressed();
+        }
     }
 }

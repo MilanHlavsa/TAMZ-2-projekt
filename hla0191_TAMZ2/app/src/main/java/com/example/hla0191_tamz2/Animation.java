@@ -10,8 +10,6 @@ import android.view.View;
 import android.os.Handler;
 
 import java.util.Timer;
-import java.util.TimerTask;
-import java.util.logging.LogRecord;
 
 import static com.example.hla0191_tamz2.AnimImages.ANEMPTY;
 import static com.example.hla0191_tamz2.AnimImages.EX1;
